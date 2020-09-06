@@ -1,0 +1,81 @@
+//подключение файлов (миксины подключаются впереди)
+@import 'main.scss'; 
+
+//вложенности селекторов
+.one {
+  color: black;
+  .two {
+    background: blue; 
+  }
+}
+
+//знак '&', вместо внешнего селектора
+.one {
+  color: black;
+  &:hover {
+    background: blue; //вместо .one:hover
+  }
+  &--blue {
+    background: blue; //вместо .one--blue
+  }
+}
+
+//переменные
+$white: #ffff;
+
+.one {
+  color: $white;
+}
+
+//миксины(примеси), форма записи: @mixin + имя миксина + (параметры)
+@mixin mainfont($size, $color) {
+  font-size: $size;
+  color: $color;
+  line-height: normal;
+}
+
+.one {
+  @include mainfont(20px, #ffff);
+}
+
+//наследования
+.arrow {
+  width: 100px;
+  height: 100px;
+}
+
+.arrow--left {
+  @extend .arrow;
+  transform: rotate(90deg);
+}
+
+//математические операции
+$width: 100%;
+.container {
+ width: $width;
+}
+.column-half {
+ width: $width / 2;
+}
+
+//функции
+@function rem($px) {
+	@return $px / 16px+0rem;
+}
+
+.one {
+  height: rem(40px);
+}
+
+//медиазапросы
+@mixin desktop {
+	@media screen and (max-width: $desktop) {
+		@content;
+	}
+}
+
+.one {
+  @include desktop {
+    width: 20px;
+  };
+}
